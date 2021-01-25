@@ -20,6 +20,29 @@
 	</div>
 	<div class="col-sm-6 hidden-sm hidden-xs">
 		<img id="front-splash" src="{{ url_for('static',filename='img/front-splash.jpg') }}" alt="Front Photo of Musical Band" />
+		<div class="row mt-5">
+			{% if artists|length > 0 %}
+			<div class="col-md-6">
+				<h4 class="text-primary">Recent Artists</h4>
+				<ul class="list-group">
+					{% for artist in artists %}
+					<li class="list-group-item" text-primary><a href="/artists/{{artist.id}}">{{ artist.name }}</a></li>
+					{% endfor %}
+				</ul>
+			</div>
+			{% endif %}
+			{% if venues|length > 0 %}
+			<div class="col-md-6">
+				<h4 class="text-info">Recent Venues</h4>
+				
+				<ul class="list-group">
+					{% for venue in venues %}
+					<li class="list-group-item text-info"><a href="/venues/{{venue.id}}">{{ venue.name }}</a></li>
+					{% endfor %}
+				</ul>
+			</div>
+			{% endif %}
+		</div>
 	</div>
 </div>
 {% endblock %}

@@ -1,6 +1,6 @@
 from datetime import datetime
 from flask_wtf import Form
-from wtforms import StringField, SelectField, SelectMultipleField, DateTimeField
+from wtforms import StringField, SelectField, SelectMultipleField, DateTimeField, RadioField
 from wtforms.validators import DataRequired, AnyOf, URL
 
 class ShowForm(Form):
@@ -116,6 +116,23 @@ class VenueForm(Form):
     facebook_link = StringField(
         'facebook_link', validators=[URL()]
     )
+    #Added
+    image_link = StringField(
+        'image_link', validators=[URL()]
+    )
+    seeking_talent = RadioField(
+        'Choice?',
+        # [validators.Required()],
+        validators=[DataRequired()],
+        choices=[(True, 'True'), (False, 'False')], default=False
+    ) 
+    seeking_description = StringField(
+        'seeking_description'
+    )
+    website = StringField(
+        # TODO implement enum restriction
+        'website', validators=[URL()]
+    )
 
 class ArtistForm(Form):
     name = StringField(
@@ -182,7 +199,7 @@ class ArtistForm(Form):
     )
     phone = StringField(
         # TODO implement validation logic for state
-        'phone'
+        'phone', validators=[DataRequired()]
     )
     image_link = StringField(
         'image_link'
@@ -215,6 +232,33 @@ class ArtistForm(Form):
     facebook_link = StringField(
         # TODO implement enum restriction
         'facebook_link', validators=[URL()]
+    )
+
+
+    #Added
+    image_link = StringField(
+        'image_link', validators=[URL()]
+    )
+    seeking_venue = RadioField(
+        'Choice?',
+        # [validators.Required()],
+        validators=[DataRequired()],
+        choices=[(True, 'True'), (False, 'False')], default=False
+    ) 
+    seeking_description = StringField(
+        'seeking_description'
+    )
+    website = StringField(
+        # TODO implement enum restriction
+        'website', validators=[URL()]
+    )
+    availability_start_time = DateTimeField(
+        'availability_start_time',
+        default= datetime.today()
+    )
+    availability_end_time = DateTimeField(
+        'availability_end_time',
+        default= datetime.today()
     )
 
 # TODO IMPLEMENT NEW ARTIST FORM AND NEW SHOW FORM
