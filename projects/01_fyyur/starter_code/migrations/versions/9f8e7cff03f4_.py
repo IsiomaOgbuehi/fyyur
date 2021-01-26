@@ -60,6 +60,8 @@ def upgrade():
                nullable=False)
     op.drop_constraint('Venue_name_key', 'Venue', type_='unique')
     op.create_unique_constraint(None, 'Venue', ['name', 'phone'])
+    # op.rename_table('Artist', 'artists')
+    # op.rename_table('Venue', 'venues')
     # ### end Alembic commands ###
 
 
