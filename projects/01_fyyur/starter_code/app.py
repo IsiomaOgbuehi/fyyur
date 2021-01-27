@@ -319,7 +319,7 @@ def edit_artist_submission(artist_id):
         try:
           artist = Artist.query.get(artist_id)
           form.populate_obj(artist)
-          artist.seeking_venue = bool(distutils.util.strtobool(artist.seeking_venue))
+          artist.seeking_venue = form.seeking_venue.data == 'True'
 
           db.session.add(artist)
           db.session.commit()
@@ -391,7 +391,7 @@ def create_artist_submission():
         try:
           artist = Artist()
           form.populate_obj(artist)
-          artist.seeking_venue = bool(distutils.util.strtobool(artist.seeking_venue))
+          artist.seeking_venue = form.seeking_venue.data == 'True'
 
           db.session.add(artist)
           db.session.commit()
