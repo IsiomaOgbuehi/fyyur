@@ -186,7 +186,7 @@ def create_venue_submission():
         try:
           venue = Venue()
           form.populate_obj(venue)
-          venue.seeking_talent = bool(venue.seeking_talent)
+          venue.seeking_talent = form.seeking_talent.data == 'True'
 
           db.session.add(venue)
           db.session.commit()
@@ -324,7 +324,7 @@ def edit_artist_submission(artist_id):
           db.session.add(artist)
           db.session.commit()
         # TODO: modify data to be the data object returned from db insertion
-          flash('Artist ' + artist.name + ' was successfully listed!')
+          flash('Artist ' + artist.name + ' was successfully Edited!')
         except ValueError as e:
           print(e)
           db.session.rollback()
@@ -358,10 +358,11 @@ def edit_venue_submission(venue_id):
         try:
           venue = Venue.query.get(venue_id)
           form.populate_obj(venue)
-          venue.seeking_talent = bool(venue.seeking_talent)
+          # print(type(form.seeking_talent.data == 'True'))
+          venue.seeking_talent = form.seeking_talent.data == 'True'
           db.session.commit()
         # TODO: modify data to be the data object returned from db insertion
-          flash('Venue ' + venue.name + ' was successfully listed!')
+          flash('Venue ' + venue.name + ' was successfully Edited!')
         except ValueError as e:
           print(e)
           db.session.rollback()

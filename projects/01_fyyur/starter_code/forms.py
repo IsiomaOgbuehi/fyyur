@@ -126,8 +126,7 @@ class VenueForm(FlaskForm):
         'image_link'
     )
     seeking_talent = RadioField(
-        'Radio',
-        # [validators.Required()],
+        'SeekingTalent',
         validators=[DataRequired()],
         choices=[(True, 'True'), (False, 'False')], default=False
     ) 
@@ -187,7 +186,7 @@ class ArtistForm(FlaskForm):
         'image_link'
     )
     seeking_venue = RadioField(
-        'Radio',
+        'SeekingVenue',
         validators=[DataRequired()],
         choices=[(True, 'True'), (False, 'False')], default=False
     ) 
