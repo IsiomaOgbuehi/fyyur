@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import '../stylesheets/App.css';
 import Question from './Question';
 import Search from './Search';
+import Category from './Category'
 import $ from 'jquery';
 
 class QuestionView extends Component {
@@ -12,7 +13,7 @@ class QuestionView extends Component {
       questions: [],
       page: 1,
       totalQuestions: 0,
-      categories: {},
+      categories: [],
       currentCategory: null,
     }
   }
@@ -30,7 +31,8 @@ class QuestionView extends Component {
           questions: result.questions,
           totalQuestions: result.total_questions,
           categories: result.categories,
-          currentCategory: result.current_category })
+          currentCategory: result.current_category
+        })
         return;
       },
       error: (error) => {
@@ -101,6 +103,30 @@ class QuestionView extends Component {
     })
   }
 
+  addCategory = (category) => {
+      $.ajax({
+          url: `/categories`, //TODO: update request URL
+          type: "POST",
+          dataType: 'json',
+          contentType: 'application/json',
+          data: JSON.stringify({type: category}),
+          xhrFields: {
+              withCredentials: true
+          },
+          crossDomain: true,
+          success: (result) => {
+              this.setState({
+                  categories: result.categories});
+              document.getElementById("add-category").reset();
+              return;
+          },
+          error: (error) => {
+              alert('Unable to Add Category. Please try your request again')
+              return;
+          }
+      })
+  }
+
   questionAction = (id) => (action) => {
     if(action === 'DELETE') {
       if(window.confirm('are you sure you want to delete the question?')) {
@@ -119,6 +145,7 @@ class QuestionView extends Component {
     }
   }
 
+
   render() {
     return (
       <div className="question-view">
@@ -126,13 +153,15 @@ class QuestionView extends Component {
           <h2 onClick={() => {this.getQuestions()}}>Categories</h2>
           <ul>
             {Object.keys(this.state.categories).map((id, ) => (
+
               <li key={id} onClick={() => {this.getByCategory(id)}}>
                 {this.state.categories[id]}
-                <img className="category" src={`${this.state.categories[id]}.svg`}/>
+                <img className="category" src={`${this.state.categories[id]}.svg`} onError={(e)=>{e.target.onerror = null; e.target.src="not_found.svg"}} alt={`Category Img`} />
               </li>
             ))}
           </ul>
           <Search submitSearch={this.submitSearch}/>
+          <Category addCategory={this.addCategory} />
         </div>
         <div className="questions-list">
           <h2>Questions</h2>

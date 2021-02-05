@@ -16,7 +16,11 @@ class QuizView extends Component {
         numCorrect: 0,
         currentQuestion: {},
         guess: '',
-        forceEnd: false
+        forceEnd: false,
+        users: [],
+        player: null,
+        newPlayer: null,
+        lastScore: null
     }
   }
 
@@ -32,7 +36,23 @@ class QuizView extends Component {
         alert('Unable to load categories. Please try your request again')
         return;
       }
-    })
+    });
+    this.getUsers();
+  }
+
+  getUsers = () => {
+      $.ajax({
+          url: `/users`, //TODO: update request URL
+          type: "GET",
+          success: (result) => {
+              this.setState({ users: result.users })
+              return;
+          },
+          error: (error) => {
+              alert('Unable to load Users. Please try your request again')
+              return;
+          }
+      })
   }
 
   selectCategory = ({type, id=0}) => {
@@ -41,6 +61,11 @@ class QuizView extends Component {
 
   handleChange = (event) => {
     this.setState({[event.target.name]: event.target.value})
+  }
+
+  setPlayer = (event) => {
+      this.setState({player: event.target.value, lastScore: event.target[event.target.selectedIndex].getAttribute('data-score')})
+
   }
 
   getNextQuestion = () => {
@@ -99,29 +124,113 @@ class QuizView extends Component {
     })
   }
 
+    handleInputChange = () => {
+        this.setState({
+            newPlayer: this.newUser.value
+        })
+    }
+
+    addUser = () => {
+        $.ajax({
+            url: `/users`, //TODO: update request URL
+            type: "POST",
+            dataType: 'json',
+            contentType: 'application/json',
+            data: JSON.stringify({name: this.state.newPlayer}),
+            xhrFields: {
+                withCredentials: true
+            },
+            crossDomain: true,
+            success: (result) => {
+                this.getUsers();
+                document.getElementById("add-user").reset();
+                return;
+            },
+            error: (error) => {
+                alert('Unable to Add Category. Please try your request again')
+                return;
+            }
+        })
+    }
+
   renderPrePlay(){
       return (
           <div className="quiz-play-holder">
-              <div className="choose-header">Choose Category</div>
-              <div className="category-holder">
-                  <div className="play-category" onClick={this.selectCategory}>ALL</div>
-                  {Object.keys(this.state.categories).map(id => {
-                  return (
-                    <div
-                      key={id}
-                      value={id}
-                      className="play-category"
-                      onClick={() => this.selectCategory({type:this.state.categories[id], id})}>
-                      {this.state.categories[id]}
-                    </div>
-                  )
-                })}
+              <div className="category-section">
+                  <div className="choose-header">Choose Category</div>
+                  <div className="category-holder">
+                      <label for="all" className="select-category"> <input type="radio" id="all" name="play-category" className="play-category" onClick={this.selectCategory} />ALL</label>
+                      {Object.keys(this.state.categories).map(id => {
+                      return (
+                        <div>
+                            <label for={id} className="select-category">
+                            <input type="radio"
+                                   name="play-category"
+                                   key={id}
+                                   value={id}
+                                   id={id}
+                                   className="play-category"
+                                   onClick={() => this.selectCategory({type:this.state.categories[id], id})} />
+                                {this.state.categories[id]}
+                            </label>
+                        </div>
+                      )
+                    })}
+                  </div>
+              </div>
+              <div className="user-section">
+                  <h4>Select User to continue</h4>
+                  <h3>{this.state.lastScore ? 'Last Score :' + this.state.lastScore : ''}</h3>
+
+                  <select name="users" className="users" onChange={this.setPlayer}>
+                      <option value="" key=""> Select User </option>
+                      {this.state.users.map(res => {
+                          return(
+                              <option value={res.id} key={res.id} data-score={res.score}> {res.name} </option>
+                          )
+                      })}
+                  </select>
+
+                  <br />
+                  <form onSubmit={this.addUser} id="add-user" className="add-user">
+                      <h4>Add User?</h4>
+                      <input
+                          placeholder="Add User"
+                          ref={input => this.newUser = input}
+                          onChange={this.handleInputChange}
+                      />
+                      <input type="submit" value="Add" className="add-user-btn"/>
+                  </form>
+
               </div>
           </div>
       )
   }
 
+  submitScore = () => {
+      $.ajax({
+          url: `/users`, //TODO: update request URL
+          type: "PATCH",
+          dataType: 'json',
+          contentType: 'application/json',
+          data: JSON.stringify({id: this.state.player, score: this.state.numCorrect}),
+          xhrFields: {
+              withCredentials: true
+          },
+          crossDomain: true,
+          success: (result) => {
+
+              return;
+          },
+          error: (error) => {
+              alert('Unable to Save User Score. Please try your request again')
+              return;
+          }
+      })
+  }
+
   renderFinalScore(){
+      this.submitScore();
     return(
       <div className="quiz-play-holder">
         <div className="final-header"> Your Final Score is {this.state.numCorrect}</div>
@@ -167,7 +276,7 @@ class QuizView extends Component {
 
 
   render() {
-    return this.state.quizCategory
+    return this.state.quizCategory && this.state.player
         ? this.renderPlay()
         : this.renderPrePlay()
   }

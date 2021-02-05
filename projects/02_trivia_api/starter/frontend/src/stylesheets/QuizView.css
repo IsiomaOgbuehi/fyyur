@@ -1,13 +1,36 @@
 .quiz-play-holder {
-    width: 80%;
+    width: 70%;
     margin-left: 10%;
     text-align: center;
     margin-top: 40px;
+
+}
+.category-section, .user-section{
+    display: inline-block;
+}
+.user-section{
+    width: 30%;
+    vertical-align: top;
+    margin-left: 10%;
+    text-align: left;
 }
 
 .category-holder {
-    margin-top: 16px;
+    margin-top: 0px;
     font-size: 24px;
+    text-align: left;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin: auto;
+}
+
+
+.add-user{
+    text-align: left;
 }
 
 .choose-header {
@@ -17,6 +40,27 @@
 
 .play-category:hover {
     color: dodgerblue;
+    cursor: pointer;
+    text-decoration: underline;
+}
+.play-category{
+    margin-bottom: 1rem;
+}
+
+.select-category:hover{
+    cursor: pointer;
+    text-decoration: underline;
+    color: dodgerblue;
+}
+
+.add-user-btn{
+    width: 100px;
+    margin-top: 5px;
+    background-color: dodgerblue;
+    color: white;
+    padding: 3px 5px;
+    align-self: normal;
+    border-radius: 5px;
 }
 
 .button {
@@ -26,6 +70,10 @@
     color: white;
     padding: 3px 5px;
     align-self: center;
+    border-radius: 5px;
+}
+.button:hover, ul:hover{
+    cursor: pointer;
 }
 
 div.button {
