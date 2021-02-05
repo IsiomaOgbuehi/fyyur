@@ -95,17 +95,10 @@ The API will return three error types when requests fail:
 
 ### GET /categories
 * General
-<<<<<<< HEAD
     * Returns all categories
     * [URI:-] (http://127.0.0.1:5000/categories)
     * Test: `curl -X GET http://127.0.0.1:5000/categories`
 * Response:
-=======
-    - Fetches a dictionary of categories in which the keys are the ids and the value is the corresponding string of the category
-    - Request Arguments: None
-    - Returns: An object with a single key, categories, that contains a object of id: category_string key:value pairs. 
-* Sample: `curl -X GET http://127.0.0.1:5000/categories`
->>>>>>> ce0c1c80925c1e586e2884d82cb606be9f42ead0
 
 ```
 {'1' : "Science",
@@ -118,16 +111,10 @@ The API will return three error types when requests fail:
 
 ### GET /questions?page={page_number}
 * General
-<<<<<<< HEAD
     * Get questions with pagination
     * [URI:-] (http://127.0.0.1:5000/questions?page=1)
     * Test `curl -X GET http://127.0.0.1:5000/questions?page=1`
 * Response:
-=======
-    - Get questions with pagination
-    - Returns list of questions by pagination of 10, success, total_questions, categories, current_category.
-* Sample: `curl -X GET http://127.0.0.1:5000/questions?page=1`
->>>>>>> ce0c1c80925c1e586e2884d82cb606be9f42ead0
 
 ```
 {
@@ -220,16 +207,10 @@ The API will return three error types when requests fail:
 ### POST /questions
 
 * General
-<<<<<<< HEAD
     * Search for questions with a search term
     * [URI:-] (http://127.0.0.1:5000/questions)
     * Test `curl http://127.0.0.1:5000/questions -X POST -H "Content-Type: application/json" -d '{"searchTerm": "lake"}'`
 * Response: 
-=======
-    - Search for questions with a search term
-    - Returns current_category, success, questions, total_questions
-* Sample: `curl http://127.0.0.1:5000/questions -X POST -H "Content-Type: application/json" -d '{"searchTerm": "lake"}'`
->>>>>>> ce0c1c80925c1e586e2884d82cb606be9f42ead0
 
 ```
 {
@@ -253,15 +234,10 @@ The API will return three error types when requests fail:
 ### DELETE /questions/{question_id}
 
 * General
-<<<<<<< HEAD
     * Delete questions with question id. Returns success if deleted.
     * [URI:-] (http://127.0.0.1:5000/questions/20)
     * Test `curl -X DELETE  http://127.0.0.1:5000/questions/20`
 * Response:
-=======
-    - Delete questions with question id. Returns success if deleted.
-* Sample: `curl -X DELETE  http://127.0.0.1:5000/questions/20`
->>>>>>> ce0c1c80925c1e586e2884d82cb606be9f42ead0
 
 ```
 {
@@ -272,16 +248,10 @@ The API will return three error types when requests fail:
 ### GET /categories/1/questions
 
 * General
-<<<<<<< HEAD
     * Get Questions by category
     * [URI:-] (http://127.0.0.1:5000/categories/1/questions)
     * Test `curl -X GET  http://127.0.0.1:5000/categories/1/questions`
 * Response:
-=======
-    - Get Questions by category
-    - Returns current_category, success, questions, total_questions
-* Sample: `curl -X GET  http://127.0.0.1:5000/categories/1/questions`
->>>>>>> ce0c1c80925c1e586e2884d82cb606be9f42ead0
 
 ```
 {
@@ -354,16 +324,10 @@ The API will return three error types when requests fail:
 ### POST /questions
 
 * General
-<<<<<<< HEAD
     * ADD Question
     * [URI:-] (http://127.0.0.1:5000/questions)
     * Test `curl http://127.0.0.1:5000/questions -X POST -H "Content-Type: application/json" -d '{"question": "Human Machinery", "answer": "Body", "difficulty": 3, "category": 1}'`
 * Response:
-=======
-    - ADD Question with json body containing: question, answer, difficulty, category
-    - Returns success as True if successful
-* Sample: `curl http://127.0.0.1:5000/questions -X POST -H "Content-Type: application/json" -d '{"question": "Human Machinery", "answer": "Body", "difficulty": 3, "category": 1}'`
->>>>>>> ce0c1c80925c1e586e2884d82cb606be9f42ead0
 
 ```
 {
@@ -374,17 +338,10 @@ The API will return three error types when requests fail:
 ### POST /quizzes
 
 * General
-<<<<<<< HEAD
     * Get random questions to play the quiz
     * [URI:-] (http://127.0.0.1:5000/quizzes)
     * Test `curl http://127.0.0.1:5000/quizzes -X POST -H "Content-Type: application/json" -d '{"previous_questions": [], "quiz_category": {"type": "Science", "id": "1"}}'`
 * Response:
-=======
-    - Get random questions to play the quiz
-    - Sends a json body which includes: a list of previous_questions, a dictionary of quiz_category
-    - Returns success, question object containing; question, answer, category, difficutly, id
-* Sample: `curl http://127.0.0.1:5000/quizzes -X POST -H "Content-Type: application/json" -d '{"previous_questions": [], "quiz_category": {"type": "Science", "id": "1"}}'`
->>>>>>> ce0c1c80925c1e586e2884d82cb606be9f42ead0
 
 ```
 {
@@ -402,16 +359,10 @@ The API will return three error types when requests fail:
 ### POST /users
 
 * General
-<<<<<<< HEAD
     * Add Users/Players
     * [URI:-] (http://127.0.0.1:5000/quizzes)
     * Test `curl http://127.0.0.1:5000/users -X POST -H "Content-Type: application/json" -d '{"name": "Lukas"}'`
 * Response:
-=======
-    - Add Users/Players
-    - Returns success, and user's name
-* Sample: `curl http://127.0.0.1:5000/users -X POST -H "Content-Type: application/json" -d '{"name": "Lukas"}'`
->>>>>>> ce0c1c80925c1e586e2884d82cb606be9f42ead0
 
 ```
 {
@@ -423,16 +374,10 @@ The API will return three error types when requests fail:
 ### PATCH /users
 
 * General
-<<<<<<< HEAD
     * Update user's score
     * [URI:-] (http://127.0.0.1:5000/quizzes)
     * Test `curl http://127.0.0.1:5000/users -X PATCH -H "Content-Type: application/json" -d '{"id": 1, "score": 4}'`
 * Response:
-=======
-    - Update user's score
-    - Returns success, user_id, score
-* Sample: `curl http://127.0.0.1:5000/users -X PATCH -H "Content-Type: application/json" -d '{"id": 1, "score": 4}'`
->>>>>>> ce0c1c80925c1e586e2884d82cb606be9f42ead0
 
 ```
 {
@@ -445,16 +390,10 @@ The API will return three error types when requests fail:
 ### POST /categories
 
 * General
-<<<<<<< HEAD
     * Adds Categories
     * [URI:-] (http://127.0.0.1:5000/categories)
     * Test `curl http://127.0.0.1:5000/categories -X POST -H "Content-Type: application/json" -d '{"type": "Fruits"}'`
-* Response: 
-=======
-    - Adds Categories
-    - Returns all categories, success, and current type added
-* Sample: `curl http://127.0.0.1:5000/categories -X POST -H "Content-Type: application/json" -d '{"type": "Fruits"}'`
->>>>>>> ce0c1c80925c1e586e2884d82cb606be9f42ead0
+* Sample: 
 
 ```
 {
@@ -484,8 +423,4 @@ Ogbuehi I.C, Udacity Team
 
 ## Acknowledgements
 
-<<<<<<< HEAD
 The awesome team at Udacity, Lectureres, Reviewers, et al.
-=======
-The awesome team at Udacity, Lectureres, Reviewers, et al.
->>>>>>> ce0c1c80925c1e586e2884d82cb606be9f42ead0
